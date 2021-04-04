@@ -35,3 +35,14 @@ def index():
     db.session.add(comment)
     db.session.commit()
     return redirect(url_for('index'))
+
+@app.route("/query")
+def query():
+
+    args = request.args.get("a")
+    comment = Comment(content=args)
+    db.session.add(comment)
+    db.session.commit()
+    print(args)
+    return args
+
