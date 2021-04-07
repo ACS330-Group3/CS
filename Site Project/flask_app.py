@@ -1,10 +1,15 @@
 
 # Central System Web Application Process
 
-from flask import Flask, render_template, redirect, request, url_for, Response
+from flask import Flask, render_template, redirect, request, url_for, Response, flash, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy #Imports Necessary Information
 import datetime
 from werkzeug.utils import secure_filename
+import os
+
+UPLOAD_FOLDER = '/home/jgbroz/mysite/Site Project/Uploaded_Images'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -18,6 +23,7 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
 )
 #Sets up DB OMR to function with mysql
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -46,6 +52,53 @@ class Product(db.Model):
     mimeType = db.Column(db.Text, nullable = False, default='No Input')
     status = db.Column(db.String(100), nullable=False, default='Waiting for Pick Up')
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload', methods=["GET", "POST"])
+def upload2():
+    if request.method == "GET":
+        return render_template("upload_files.html")
+    pic = request.files['pic']
+    if not pic:
+        return 'No pic Loaded', 400
+    if pic and allowed_file(pic.filename):
+        filename = secure_filename(pic.filename)
+        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return 'help'
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+'''
+@app.route("/upload", methods=["GET","POST"])
+def upload():
+    if request.method == "GET":
+        return render_template("upload_files.html")
+    pic = request.files['pic']
+    if not pic:
+        return 'No pic Loaded', 400
+
+    filename = secure_filename(pic.filename)
+    mime = pic.mimetype
+    imageData = pic.read()
+
+    if not filename or not mime:
+        return 'Bad upload!', 400
+
+    img = Product(user="default", password="default", img=imageData, imgName=filename, mimeType=mime)
+    db.session.add(img)
+    db.session.commit()
+    return 'weird'
+    #return Response(imageData, mimetype=img.mimeType)
+    #return Response(img.img, mimetype=img.mimeType)
+'''
 
 
 
@@ -87,27 +140,6 @@ def apptest():
 
 
 #Upload Image Region
-@app.route("/upload", methods=["GET","POST"])
-def upload():
-    if request.method == "GET":
-        return render_template("upload_files.html")
-    pic = request.files['pic']
-    if not pic:
-        return 'No pic Loaded', 400
-
-    filename = secure_filename(pic.filename)
-    mime = pic.mimetype
-    imageData = pic.read()
-
-    if not filename or not mime:
-        return 'Bad upload!', 400
-
-    img = Product(user="default", password="default", img=imageData, imgName=filename, mimeType=mime)
-    db.session.add(img)
-    db.session.commit()
-    #return imageData
-    return Response(imageData, mimetype=img.mimeType)
-    #return Response(img.img, mimetype=img.mimeType)
 
 @app.route('/<int:id>')
 def get_img(id):
