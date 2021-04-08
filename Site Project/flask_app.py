@@ -47,16 +47,41 @@ class Product(db.Model):
     productID = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(75), default='No Input')
     password = db.Column(db.String(70), default='No Input')
-    img = db.Column(db.Text, unique=True, default='No Input')
-    imgName = db.Column(db.Text, nullable = False, default='No Input')
-    mimeType = db.Column(db.Text, nullable = False, default='No Input')
+    img = db.Column(db.String(120), unique=True, default='No Input')
     status = db.Column(db.String(100), nullable=False, default='Waiting for Pick Up')
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/dbUpload", methods= ["GET","POST"])
+def dbUpload():
+    if request.method == "GET":
+        return render_template("dbUploadBut.html")
+    usernameDB = request.form["user"]
+    passwordDB = request.form["pass"]
+    pic = request.files['pic']
+    if not pic:
+        return 'No pic Loaded', 400
+    if pic and allowed_file(pic.filename):
+        filename = secure_filename(pic.filename)
+        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        toSend = Product(user=usernameDB, password=passwordDB, img=filename)
+        db.session.add(toSend)
+        db.session.commit()
+        return redirect(url_for('uploaded_file',
+                                    filename=filename))
 
+    return 'Broke'
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+'''
+retired method that wouldn't work
 @app.route('/upload', methods=["GET", "POST"])
 def upload2():
     if request.method == "GET":
@@ -70,11 +95,7 @@ def upload2():
         return redirect(url_for('uploaded_file',
                                     filename=filename))
     return 'help'
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+'''
 
 '''
 @app.route("/upload", methods=["GET","POST"])
