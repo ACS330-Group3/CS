@@ -47,7 +47,12 @@ class Product(db.Model):
     productID = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(75), default='No Input')
     password = db.Column(db.String(70), default='No Input')
-    img = db.Column(db.String(120), unique=True, default='No Input')
+    img1 = db.Column(db.String(120), unique=True, default='No Input')
+    img2 = db.Column(db.String(120), unique=True, default='No Input')
+    img3 = db.Column(db.String(120), unique=True, default='No Input')
+    img4 = db.Column(db.String(120), unique=True, default='No Input')
+    img5 = db.Column(db.String(120), unique=True, default='No Input')
+    img6 = db.Column(db.String(120), unique=True, default='No Input')
     status = db.Column(db.String(100), nullable=False, default='Waiting for Pick Up')
 
 def allowed_file(filename):
@@ -60,17 +65,32 @@ def dbUpload():
         return render_template("dbUploadBut.html")
     usernameDB = request.form["user"]
     passwordDB = request.form["pass"]
-    pic = request.files['pic']
-    if not pic:
+    pic1 = request.files['pic1']
+    pic2 = request.files['pic2']
+    pic3 = request.files['pic3']
+    pic4 = request.files['pic4']
+    pic5 = request.files['pic5']
+    pic6 = request.files['pic6']
+    if not pic1:
         return 'No pic Loaded', 400
-    if pic and allowed_file(pic.filename):
-        filename = secure_filename(pic.filename)
-        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        toSend = Product(user=usernameDB, password=passwordDB, img=filename)
+    if pic1 and allowed_file(pic1.filename):
+        filename1 = secure_filename(pic1.filename)
+        filename2 = secure_filename(pic2.filename)
+        filename3 = secure_filename(pic3.filename)
+        filename4 = secure_filename(pic4.filename)
+        filename5 = secure_filename(pic5.filename)
+        filename6 = secure_filename(pic6.filename)
+        pic1.save(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
+        pic2.save(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
+        pic3.save(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
+        pic4.save(os.path.join(app.config['UPLOAD_FOLDER'], filename4))
+        pic5.save(os.path.join(app.config['UPLOAD_FOLDER'], filename5))
+        pic6.save(os.path.join(app.config['UPLOAD_FOLDER'], filename6))
+        toSend = Product(user=usernameDB, password=passwordDB, img1=filename1, img2=filename2, img3=filename3, img4=filename4, img5=filename5, img6=filename6)
         db.session.add(toSend)
         db.session.commit()
         return redirect(url_for('uploaded_file',
-                                    filename=filename))
+                                    filename=filename1))
 
     return 'Broke'
 
