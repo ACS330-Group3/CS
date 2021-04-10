@@ -34,24 +34,26 @@ def retrieveImage(Id):
             
             #Saves the passed in Id
             productID = Id
-            #Begin Query Process
-            mycursor = db.cursor()
-            #select image Column from Database Table
-            mycursor.execute("SELECT img FROM productDetails WHERE productID = "+ str(productID))
-            
-            #Store the first result in a variable
-            row = mycursor.fetchone()
-            
-            #Join File paths to one another when saving image
-            completePath = os.path.join(savePath, row[0])
-            #Join Image name to expected url to access it
-            setUrl = 'http://jgbroz.pythonanywhere.com/uploads/'+ row[0]
-            
-            #print (setUrl) Prints the full URL (Testing)
-            #Downlaods image using Requests tree
-            r = requests.get(setUrl, allow_redirects=True)
-            #Opens a new file to save the data to.
-            open(completePath, 'wb').write(r.content)
+            for x in range(1,7):
+                #Begin Query Process
+                mycursor = db.cursor()
+                #select image Column from Database Table
+                query = "SELECT img{} FROM productDetails WHERE productID = {}".format(x,productID) 
+                mycursor.execute(query)
+                
+                #Store the first result in a variable
+                row = mycursor.fetchone()
+                
+                #Join File paths to one another when saving image
+                completePath = os.path.join(savePath, row[0])
+                #Join Image name to expected url to access it
+                setUrl = 'http://jgbroz.pythonanywhere.com/uploads/'+ row[0]
+                
+                #print (setUrl) Prints the full URL (Testing)
+                #Downlaods image using Requests tree
+                r = requests.get(setUrl, allow_redirects=True)
+                #Opens a new file to save the data to.
+                open(completePath, 'wb').write(r.content)
             #Closes the database 
             db.close()
             #returns a success if successful
