@@ -7,6 +7,7 @@ Created on Sat Apr 10 09:18:37 2021
 
 import downloadImage
 import retrieveInfo
+import updateStatus
 
 
 
@@ -14,11 +15,6 @@ import retrieveInfo
 Dummy Function List that needs doing:
     Priority:
         GENERAL LOGIC FRAME NEEDS TO BE ADDED HERE
-        
-        
-        updateStatus     
-
-        
         checkRFID
         checkStations
         sendToStation (may need extra):
@@ -34,13 +30,18 @@ Dummy Function List that needs doing:
     compeleted:
         retrieveInfo
         downloadImage(change to download 6 images)
+        updateStatus     
     
 """
 
 #Callable method to retrieve an image by Primary Key Insert where needed
-testImage = downloadImage.retrieveImage(1)
+#testImage = downloadImage.retrieveImage(5)
 #print(testImage)
 
 #Test Sequence to retrieve column data from database
-#testInfo = retrieveInfo.retrieveCol(13, 'status')
+#testInfo = retrieveInfo.retrieveCol(5, 'user')
+#print(testInfo)
+
+#Test status Update
+#testInfo = updateStatus.updateStatus(5,'Operate under pressure')
 #print(testInfo)
