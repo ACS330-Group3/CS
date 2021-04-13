@@ -44,8 +44,6 @@ def retrieveCol(ID,colName):
         return ('Fail')
     finally:
         if db:
-            print('Connection still open. Will close now:')
-            print('Succesful Image Acquisition')
             db.close()
             #returns a success if successful
             return (row[0])

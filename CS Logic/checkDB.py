@@ -41,10 +41,11 @@ def checkPickUp():
         return ('Fail')
     finally:
         if db:
-            print('Connection still open. Will close now:')
-            print('Succesful Image Acquisition')
             db.close()
             #returns a success if successful
+            if row is None:
+                return False
             return (row[0])
-        print('All Connections closed')
+        if row is None:
+            return False
         return (row[0])

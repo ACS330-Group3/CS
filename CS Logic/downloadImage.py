@@ -43,9 +43,13 @@ def retrieveImage(Id):
                 
                 #Store the first result in a variable
                 row = mycursor.fetchone()
+                splitRow = row[0].split(".")
+                print(splitRow[0])
+                print(splitRow[1])
+                fileName = "{}_{}_{}.{}".format(productID,splitRow[0],x,splitRow[1])
                 
                 #Join File paths to one another when saving image
-                completePath = os.path.join(savePath, row[0])
+                completePath = os.path.join(savePath, fileName)
                 #Join Image name to expected url to access it
                 setUrl = 'http://jgbroz.pythonanywhere.com/uploads/'+ row[0]
                 
@@ -62,8 +66,6 @@ def retrieveImage(Id):
         return ('Fail')
     finally:
         if db:
-            print('Connection still open. Will close now:')
-            print('Succesful Image Acquisition')
             db.close()
             #returns a success if successful
             return ('Success')
