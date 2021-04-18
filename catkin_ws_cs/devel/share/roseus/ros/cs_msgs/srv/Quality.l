@@ -1,0 +1,1 @@
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/cs_msgs/share/roseus/ros/cs_msgs/srv/Quality.l

@@ -1,0 +1,6 @@
+devel_space: /home/jgbroz/Documents/CS/catkin_ws_cs/devel
+install: false
+install_space: /home/jgbroz/Documents/CS/catkin_ws_cs/install
+profile: default
+source_space: /home/jgbroz/Documents/CS/catkin_ws_cs/src
+workspace: /home/jgbroz/Documents/CS/catkin_ws_cs

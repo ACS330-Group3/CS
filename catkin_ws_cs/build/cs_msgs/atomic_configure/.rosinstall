@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/cs_msgs/setup.sh

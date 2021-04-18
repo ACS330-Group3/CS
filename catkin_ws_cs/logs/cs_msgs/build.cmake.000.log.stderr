@@ -1,0 +1,14 @@
+[31m[1mCMake Error[0m at /home/jgbroz/Documents/CS/catkin_ws_cs/build/cs_msgs/cmake/cs_msgs-genmsg.cmake:3 (message):
+  Could not find messages which
+  '/home/jgbroz/Documents/CS/catkin_ws_cs/src/cs_msgs/srv/Images.srv' depends
+  on.  Did you forget to specify generate_messages(DEPENDENCIES ...)?
+
+  Cannot locate message [Image]: unknown package [sensor_msg] on search path
+  [{{'std_msgs': ['/opt/ros/melodic/share/std_msgs/cmake/../msg'],
+  'geometry_msgs': ['/opt/ros/melodic/share/geometry_msgs/cmake/../msg'],
+  'sensor_msgs': ['/opt/ros/melodic/share/sensor_msgs/cmake/../msg']}}]
+[36mCall Stack (most recent call first):[0m
+  /opt/ros/melodic/share/genmsg/cmake/genmsg-extras.cmake:307 (include)
+  CMakeLists.txt:73 (generate_messages)
+
+

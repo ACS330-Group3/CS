@@ -1,0 +1,1 @@
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/cs_msgs/include/cs_msgs/QualityRequest.h

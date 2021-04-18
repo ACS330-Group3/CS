@@ -1,0 +1,8 @@
+prefix=/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/cs_msgs
+
+Name: cs_msgs
+Description: Description of cs_msgs
+Version: 0.0.0
+Cflags: -I/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/cs_msgs/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy sensor_msgs message_runtime

@@ -1,0 +1,1 @@
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/share/CS/cmake/CSConfig.cmake

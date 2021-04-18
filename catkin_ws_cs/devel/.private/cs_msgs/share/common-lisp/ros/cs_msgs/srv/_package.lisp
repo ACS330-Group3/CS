@@ -1,0 +1,20 @@
+(cl:defpackage cs_msgs-srv
+  (:use )
+  (:export
+   "IMAGES"
+   "<IMAGES-REQUEST>"
+   "IMAGES-REQUEST"
+   "<IMAGES-RESPONSE>"
+   "IMAGES-RESPONSE"
+   "LOCATION"
+   "<LOCATION-REQUEST>"
+   "LOCATION-REQUEST"
+   "<LOCATION-RESPONSE>"
+   "LOCATION-RESPONSE"
+   "QUALITY"
+   "<QUALITY-REQUEST>"
+   "QUALITY-REQUEST"
+   "<QUALITY-RESPONSE>"
+   "QUALITY-RESPONSE"
+  ))
+

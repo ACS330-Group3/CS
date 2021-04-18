@@ -1,0 +1,5 @@
+CS
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/cmake.lock /home/jgbroz/Documents/CS/catkin_ws_cs/devel/./cmake.lock
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/lib/pkgconfig/CS.pc /home/jgbroz/Documents/CS/catkin_ws_cs/devel/lib/pkgconfig/CS.pc
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/share/CS/cmake/CSConfig-version.cmake /home/jgbroz/Documents/CS/catkin_ws_cs/devel/share/CS/cmake/CSConfig-version.cmake
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/share/CS/cmake/CSConfig.cmake /home/jgbroz/Documents/CS/catkin_ws_cs/devel/share/CS/cmake/CSConfig.cmake

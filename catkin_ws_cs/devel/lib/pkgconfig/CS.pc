@@ -1,0 +1,1 @@
+/home/jgbroz/Documents/CS/catkin_ws_cs/devel/.private/CS/lib/pkgconfig/CS.pc
