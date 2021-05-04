@@ -12,16 +12,19 @@ def handleLocation(req):
     
     if dbAccessed == 'Waiting for Pick Up':
         output = 1
-        dummyHold = updateStatus.updateStatus(req.ID, 'At Drawing Station')
-    elif dbAccessed == 'At Drawing Station':
+        dummyHold = updateStatus.updateStatus(req.ID, 'Transporting to DS')
+    elif dbAccessed == 'Arrived at the Drawing Station' or dbAccessed == 'Arrived at the Quality Control' or dbAccessed == 'Arrived at the Packing Station':
+        output = 5
+        dummyHold = retrieveInfo.retrieveCol(req.ID, 'status')
+    elif dbAccessed == 'Transporting to QC':
         output = 2
-        dummyHold = updateStatus.updateStatus(req.ID, 'At Quality Control')
-    elif dbAccessed == 'At Quality Control':
+        dummyHold = retrieveInfo.retrieveCol(req.ID, 'status')
+    elif dbAccessed == 'Transporting to Packing':
         output = 3
-        dummyHold = updateStatus.updateStatus(req.ID, 'Transporting to Packaging')
+        dummyHold = retrieveInfo.retrieveCol(req.ID, 'status')
     else:
         output = 5
-        dummyHold = 'Error'
+        dummyHold = 'Waiting at Station'
     rospy.loginfo('Result {}'.format(dummyHold))
     return LocationResponse(output)
 

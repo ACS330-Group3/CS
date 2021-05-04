@@ -3,13 +3,15 @@
 from VrepCustomBot import *
 from cs_msgs.srv import *
 import rospy
+import updateStatus
+import time
 
 def getStationClient(ID):
     rospy.wait_for_service('Location')
     try:
         newLocation = rospy.ServiceProxy('Location', Location)
         response = newLocation(ID)
-        print('The generated station is: {}'.format(response.station))
+        print('The generated Action code is: {}'.format(response.station))
         return response.station
     except rospy.ServiceException as e:
         print('Service call failed: {}'.format(e))
@@ -17,7 +19,7 @@ def getStationClient(ID):
 
 if __name__ == "__main__":
     rospy.init_node('Omni_Node')
-    productID = 11 #Change if we swap the default ID or do RFID Plan!
+    productID = 7 #Change if we swap the default ID or do RFID Plan!
 
     bot = VrepBot()
     connected = bot.check_connected()
@@ -66,15 +68,20 @@ if __name__ == "__main__":
             if nextLocation == 1:
                 print('Going to station DS!')
                 bot.path_goto(waypoints[0].x, waypoints[0].y, waypoints[0].gamma)
+                rospy.loginfo('Arrived at the Drawing Station')
+                dummyHold = updateStatus.updateStatus(productID, 'Arrived at the Drawing Station')
             elif nextLocation == 2:
                 print('Going to station QC!')
                 bot.path_goto(waypoints[3].x, waypoints[3].y, waypoints[3].gamma)
+                rospy.loginfo('Arrived at the Quality Control')
+                dummyHold = updateStatus.updateStatus(productID, 'Arrived at the Quality Control')
             elif nextLocation == 3:
-                print('Going to station 3!')
+                print('Going to the Packing Region!')
                 bot.path_goto(waypoints[1].x, waypoints[1].y, waypoints[1].gamma)
+                dummyHold = updateStatus.updateStatus(productID, 'Arrived at the Packing Station')
             elif nextLocation == 5:
-                print('Going to station 4!')
-                bot.path_goto(waypoints[2].x, waypoints[2].y, waypoints[2].gamma)
+                print('Will Idle')
+                time.sleep(20)
             else:
                 Loop = False
 
